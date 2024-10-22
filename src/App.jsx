@@ -1,6 +1,16 @@
+import { useState } from "react";
 import Form from "./components/Form";
+import { Success } from "./components/Success";
 
 export default function App() {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState({});
+
+  const handleFormSubmit = (data) => {
+    setFormData(data);
+    setIsSubmitted(true);
+  };
+
   return (
     <div className="min-h-screen w-full flex bg-zinc-100 text-zinc-800 font-sans">
       <main
@@ -16,9 +26,13 @@ export default function App() {
             Preencha o formulário com seus dados para se cadastrar como membro
           </p>
         </header>
-        
+
         <section className="w-full" aria-labelledby="form-description">
-          <Form />
+          {isSubmitted ? (
+            <Success formData={formData} />
+          ) : (
+            <Form onSubmit={handleFormSubmit} />
+          )}
         </section>
       </main>
     </div>

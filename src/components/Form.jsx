@@ -43,7 +43,7 @@ const schema = z.object({
     })),
 });
 
-export default function Form() {
+export default function Form({ onSubmit }) {
   const {
     register,
     handleSubmit,
@@ -52,12 +52,12 @@ export default function Form() {
     resolver: zodResolver(schema),
   });
 
-  function onSubmit(data) {
-    console.log(data);
-  }
+  const handleFormSubmit = (data) => {
+    onSubmit(data);
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} aria-label="Job Application Form">
+    <form onSubmit={handleSubmit(handleFormSubmit)} aria-label="Job Application Form">
       <fieldset
         className="grid grid-cols-1 gap-6 md:grid-cols-2"
         aria-labelledby="form-title"
