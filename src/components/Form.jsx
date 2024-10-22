@@ -43,7 +43,7 @@ const schema = z.object({
     })),
 });
 
-export default function Form({ onSubmit }) {
+export function Form({ onSubmit }) {
   const {
     register,
     handleSubmit,

@@ -1,14 +1,25 @@
 import { useState } from "react";
-import Form from "./components/Form";
-import { Success } from "./components/Success";
+import { StatusMessage } from "./components/StatusMessage";
+import { Form } from "./components/Form";
 
 export default function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({});
+  const [message, setMessage] = useState("");
+  const [hasError, setHasError] = useState(false);
 
   const handleFormSubmit = (data) => {
-    setFormData(data);
-    setIsSubmitted(true);
+    try {
+      localStorage.setItem("formData", JSON.stringify(data));
+      setFormData(data);
+      setIsSubmitted(true);
+      setHasError(false);
+      setMessage("Cadastro realizado com sucesso!");
+    } catch (error) {
+      setIsSubmitted(true);
+      setHasError(true);
+      setMessage("Falha ao cadastrar. Verifique os dados informados.");
+    }
   };
 
   return (
@@ -29,7 +40,7 @@ export default function App() {
 
         <section className="w-full" aria-labelledby="form-description">
           {isSubmitted ? (
-            <Success formData={formData} />
+            <StatusMessage message={message} formData={hasError ? null : formData} />
           ) : (
             <Form onSubmit={handleFormSubmit} />
           )}
