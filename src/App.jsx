@@ -38,9 +38,17 @@ export default function App() {
           </p>
         </header>
 
-        <section className="w-full" aria-labelledby="form-description">
+        <section
+          className="w-full"
+          aria-labelledby="form-description"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {isSubmitted ? (
-            <StatusMessage message={message} formData={hasError ? null : formData} />
+            <StatusMessage
+              message={message}
+              formData={hasError ? null : formData}
+            />
           ) : (
             <Form onSubmit={handleFormSubmit} />
           )}
